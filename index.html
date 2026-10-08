@@ -32,4 +32,250 @@ input[type=text],input[type=number],select,textarea{width:100%;background:#0b0e1
 .bottom{position:fixed;left:0;right:0;bottom:0;z-index:50;padding:8px 8px calc(8px + env(safe-area-inset-bottom));background:#0b0d11eF;border-top:1px solid var(--line);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
 .nav{max-width:720px;margin:auto;display:grid;grid-template-columns:repeat(5,1fr);gap:3px}.navbtn{background:transparent;border:0;border-radius:13px;padding:7px 2px;color:#7f8995;font-size:10px}.navbtn .ni{display:block;font-size:21px;line-height:23px;margin-bottom:2px}.navbtn.active{color:#fff;background:#1a1f26}.navbtn.active .ni{color:var(--orange)}
 .hero{padding:20px 16px;border-radius:21px;background:linear-gradient(135deg,#1d1712,#11151b);border:1px solid #3b2b20;margin:10px 0 14px}.hero h2{font-size:25px;margin-bottom:6px}.hero p{color:var(--muted);margin:0;line-height:1.4}
-.big-note{font-size:88px;line-height:1;font-weight:900;color
+.big-note{font-size:88px;line-height:1;font-weight:900;color:var(--orange);margin:10px}.meter{height:8px;background:#292f37;border-radius:99px;position:relative;margin:22px 0}.needle{position:absolute;top:0;height:8px;width:50%;left:25%;border-radius:99px;background:var(--orange)}.meter i{position:absolute;left:50%;top:-5px;height:18px;width:2px;background:#fff}
+.preset{border:1px solid var(--line);background:#10151a;padding:13px;border-radius:12px;margin:8px 0;display:flex;align-items:center;gap:10px}.preset span:first-child{font-size:20px}.preset b{flex:1}.preset small{color:var(--muted)}
+.knobs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.knob{text-align:center}.dial{width:62px;height:62px;border-radius:50%;margin:auto;background:conic-gradient(var(--orange) var(--p,50%),#2a3038 0);display:grid;place-items:center;position:relative}.dial:after{content:"";width:47px;height:47px;border-radius:50%;background:#101419}.dial span{position:absolute;z-index:1;font-size:12px;font-weight:800}.knob label{font-size:11px}
+.transport{display:flex;align-items:center;justify-content:center;gap:9px}.bpm{font-size:38px;font-weight:900;color:var(--orange);min-width:90px;text-align:center}.beatrow{display:flex;justify-content:center;gap:8px;margin:17px}.beat{width:13px;height:13px;border-radius:50%;background:#303740}.beat.on{background:var(--orange);box-shadow:0 0 12px #ff781899}
+.drop{border:1px dashed #4a5561;border-radius:14px;padding:28px 15px;text-align:center;color:var(--muted)}.track{padding:11px;border:1px solid var(--line);border-radius:12px;margin-top:9px}.track b{display:block;margin-bottom:8px}.track audio{width:100%}
+.noteitem{border:1px solid var(--line);border-radius:12px;background:#101419;padding:12px;margin:8px 0}.noteitem b{display:block}.noteitem small{color:var(--muted)}
+.fret{overflow:auto;border:1px solid var(--line);border-radius:12px;padding:8px;background:#0d1115}.fret table{border-collapse:collapse;min-width:600px;width:100%}.fret td,.fret th{border:1px solid #343c45;height:33px;text-align:center;font-size:11px}.fret th{color:var(--muted)}.dot{background:var(--orange);border-radius:50%;display:inline-grid;place-items:center;width:23px;height:23px;color:#111;font-weight:900}
+.chordbox{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;line-height:1.75;background:#0b0e12;padding:13px;border-radius:12px;white-space:pre-wrap;border:1px solid var(--line)}
+.pedalchain{display:flex;gap:8px;overflow:auto;padding-bottom:5px}.pedal{min-width:100px;border:1px solid var(--line);background:#161b21;border-radius:14px;padding:13px;text-align:center}.pedal.on{border-color:var(--orange);box-shadow:0 0 0 1px #ff781822 inset}.pedal small{display:block;color:var(--muted);margin-top:5px}
+.rangeval{color:var(--orange2);font-weight:800}.status{min-height:18px;color:var(--muted);font-size:12px;margin-top:9px}
+.hidden{display:none!important}.install-tip{border:1px solid #4a3425;background:#17120e;color:#e7d3c0;border-radius:13px;padding:12px;font-size:12px;line-height:1.4}
+.footer-credit{text-align:center;padding:20px 10px 10px;font-size:13px;color:var(--muted);border-top:1px solid var(--line);margin-top:25px}
+.footer-credit b{color:var(--text)}
+.pix-box{background:#12171e;border:1px dashed var(--orange);border-radius:12px;padding:12px;margin-top:10px;text-align:center}
+.pix-box code{display:block;background:#090b0e;padding:8px;border-radius:8px;margin:8px 0;font-size:12px;color:var(--orange2);word-break:break-all}
+@media(max-width:370px){.knobs{grid-template-columns:repeat(2,1fr)}.g2{grid-template-columns:1fr}.tile{min-height:100px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header><div class="logo">GUITAR<i>LAB</i></div><div class="header-right"><button class="iconbtn" id="installBtn">＋</button><button class="iconbtn" onclick="show('settings')">⚙️</button></div></header>
+<main>
+
+<section class="page active" id="studio">
+<h1>Studio</h1><p class="sub">Seu estúdio de guitarra no iPhone.</p>
+<div class="hero"><h2>🎸 Pronto para tocar?</h2><p>Afine, monte seu timbre, abra uma Jam e registre suas ideias — tudo em um só lugar.</p></div>
+<div class="grid g2">
+<button class="tile" onclick="show('tuner')"><span class="emoji">🎯</span><b>Afinador</b><small>Cromático pelo microfone</small></button>
+<button class="tile" onclick="show('tone')"><span class="emoji">🎛️</span><b>Tone Lab</b><small>Crie seu timbre</small></button>
+<button class="tile" onclick="show('amps')"><span class="emoji">🔊</span><b>Amp Sims</b><small>Clean, crunch e high gain</small></button>
+<button class="tile" onclick="show('pedal')"><span class="emoji">🦶</span><b>Pedalboard</b><small>Monte sua cadeia</small></button>
+<button class="tile" onclick="show('jam')"><span class="emoji">▶️</span><b>Jam Room</b><small>Backing tracks e músicas</small></button>
+<button class="tile" onclick="show('looper')"><span class="emoji">🔁</span><b>Looper</b><small>Pratique sobre seus riffs</small></button>
+<button class="tile" onclick="show('metro')"><span class="emoji">⏱️</span><b>Metrônomo</b><small>Treine precisão</small></button>
+<button class="tile" onclick="show('notes')"><span class="emoji">📝</span><b>Notes</b><small>Cifras, tabs e ideias</small></button>
+<button class="tile" onclick="show('chords')"><span class="emoji">🎼</span><b>Chords</b><small>Dicionário de acordes</small></button>
+<button class="tile" onclick="show('scales')"><span class="emoji">🎸</span><b>Scales</b><small>Escalas no braço</small></button>
+</div>
+<div class="install-tip" style="margin-top:14px"><b>📱 Instalação no iPhone:</b> abra esta página no Safari → Compartilhar → <b>Adicionar à Tela de Início</b>. O GuitarLab abrirá em tela cheia.</div>
+
+<div class="footer-credit">
+  <p>Desenvolvido por <b>Eduardo Motta</b> 🎸</p>
+  <div class="pix-box">
+    <span>💡 Gostou do projeto? Apoie o desenvolvimento via Pix:</span>
+    <code id="pixKey">eduardomottagithub@gmail.com</code>
+    <button class="btn" style="padding:6px 12px;font-size:12px" onclick="copyPix('pixKey')">Copiar Chave Pix</button>
+  </div>
+</div>
+</section>
+
+<section class="page" id="tuner">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Afinador</h1><p class="sub">Toque uma corda por vez.</p>
+<div class="card center"><div class="big-note" id="tnote">—</div><div id="tinfo" class="muted">Microfone desligado</div><div class="meter"><div class="needle" id="tneedle"></div><i></i></div><div class="controls" style="justify-content:center"><button class="btn primary" id="tstart">🎙 Iniciar</button><button class="btn" id="tstop">Parar</button></div><div class="status" id="tstatus">O Safari solicitará acesso ao microfone.</div></div>
+<div class="card"><h2>Afinação padrão</h2><div class="chordbox">6ª E  •  82.41 Hz
+5ª A  •  110.00 Hz
+4ª D  •  146.83 Hz
+3ª G  •  196.00 Hz
+2ª B  •  246.94 Hz
+1ª E  •  329.63 Hz</div></div>
+</section>
+
+<section class="page" id="tone">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Tone Lab</h1><p class="sub">Seu laboratório de timbres.</p>
+<div class="card"><label>Preset</label><select id="tpreset"><option value="clean">Clean Glass</option><option value="blues">Blues Drive</option><option value="rock">Classic Rock</option><option value="metal">Modern Metal</option></select>
+<div class="knobs">
+<div class="knob"><div class="dial" id="dgain"><span>50</span></div><label>GAIN</label><input class="range" id="gain" type="range" min="0" max="100" value="50"></div>
+<div class="knob"><div class="dial" id="dbass"><span>50</span></div><label>BASS</label><input class="range" id="bass" type="range" min="0" max="100" value="50"></div>
+<div class="knob"><div class="dial" id="dmid"><span>50</span></div><label>MID</label><input class="range" id="mid" type="range" min="0" max="100" value="50"></div>
+<div class="knob"><div class="dial" id="dtreble"><span>50</span></div><label>TREBLE</label><input class="range" id="treble" type="range" min="0" max="100" value="50"></div>
+</div>
+<label>Delay <span class="rangeval" id="delayv">15%</span></label><input class="range" id="delay" type="range" value="15">
+<label>Reverb <span class="rangeval" id="reverbv">20%</span></label><input class="range" id="reverb" type="range" value="20">
+<div class="controls"><button class="btn primary" id="tonemic">🎙 Monitorar</button><button class="btn" id="tonestop">Parar</button></div><div class="status" id="tonestatus">Use fones para evitar microfonia.</div></div>
+</section>
+
+<section class="page" id="amps">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Amp Sims</h1><p class="sub">Escolha o caráter do seu amplificador.</p>
+<div class="grid g2">
+<button class="tile amp" data-a="Clean 65"><span class="emoji">✨</span><b>Clean 65</b><small>Clean cristalino</small></button>
+<button class="tile amp" data-a="Brit Crunch"><span class="emoji">🔥</span><b>Brit Crunch</b><small>Rock clássico</small></button>
+<button class="tile amp" data-a="Modern High Gain"><span class="emoji">⚡</span><b>Modern High Gain</b><small>Metal moderno</small></button>
+<button class="tile amp" data-a="Vintage Blues"><span class="emoji">🎵</span><b>Vintage Blues</b><small>Drive valvulado</small></button>
+</div>
+<div class="card"><h2 id="ampname">Clean 65</h2><label>Presence</label><input class="range" type="range" value="55"><label>Master</label><input class="range" type="range" value="70"><label>Cabinet</label><select><option>1x12 Open</option><option>2x12 Vintage</option><option>4x12 British</option><option>4x12 Modern</option></select></div>
+</section>
+
+<section class="page" id="pedal">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Pedalboard</h1><p class="sub">Toque nos pedais para ligar/desligar.</p>
+<div class="card"><div class="pedalchain" id="chain">
+<div class="pedal on"><b>GATE</b><small>Noise Gate</small></div><div class="pedal on"><b>COMP</b><small>Compressor</small></div><div class="pedal on"><b>OD</b><small>Overdrive</small></div><div class="pedal on"><b>AMP</b><small>Amp</small></div><div class="pedal on"><b>EQ</b><small>Graphic EQ</small></div><div class="pedal on"><b>DELAY</b><small>Delay</small></div><div class="pedal on"><b>VERB</b><small>Reverb</small></div></div></div>
+<div class="grid g2">
+<button class="tile pedaladd" data-name="FUZZ" data-sub="Fuzz"><span class="emoji">💥</span><b>Adicionar Fuzz</b></button>
+<button class="tile pedaladd" data-name="CHORUS" data-sub="Chorus"><span class="emoji">🌊</span><b>Adicionar Chorus</b></button>
+</div>
+<div class="card"><h2>Preset</h2><select id="pedpreset"><option>My Clean</option><option>Blues Drive</option><option>Classic Rock</option><option>Modern Metal</option></select><button class="btn primary" style="margin-top:10px" onclick="savePedal()">Salvar preset</button><div class="status" id="pedstatus"></div></div>
+</section>
+
+<section class="page" id="metro">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Metrônomo</h1><p class="sub">Mantenha o tempo.</p>
+<div class="card center"><div class="transport"><button class="btn primary" id="mbtn">▶</button><button class="btn" id="tap">TAP</button><div class="bpm" id="bpmv">100</div></div><input class="range" id="bpm" type="range" min="30" max="240" value="100"><div class="beatrow" id="beatrow"></div><label style="text-align:left">Batidas por compasso</label><select id="beats"><option>4</option><option>3</option><option>6</option><option>8</option></select></div>
+</section>
+
+<section class="page" id="jam">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Jam Room</h1><p class="sub">Importe sua música e pratique.</p>
+<div class="card"><div class="drop"><input id="files" type="file" accept="audio/*" multiple><p>🎵 Toque aqui para importar uma música ou backing track</p></div><div id="tracks"></div></div>
+<div class="card"><h2>Prática</h2><label>Velocidade <span class="rangeval" id="speedv">100%</span></label><input class="range" id="speed" type="range" min=".5" max="1.5" step=".05" value="1"><div class="grid g2" style="margin-top:12px"><button class="btn" id="minus10">−10s</button><button class="btn" id="plus10">+10s</button></div><label>Nota da sessão</label><textarea id="session" placeholder="O que você quer estudar nesta sessão?"></textarea><button class="btn primary" onclick="saveSession()">Salvar sessão</button></div>
+</section>
+
+<section class="page" id="looper">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Looper</h1><p class="sub">Crie camadas sobre seu riff.</p>
+<div class="card center"><div style="font-size:60px;font-weight:900;color:var(--orange)" id="looptime">00:00</div><div class="controls" style="justify-content:center"><button class="btn primary" id="rec">🔴 REC</button><button class="btn" id="over">OVERDUB</button><button class="btn" id="clearloop">LIMPAR</button></div><div class="status" id="loopstatus">Pronto para gravar.</div></div>
+<div class="card"><h2>Como usar</h2><p class="muted">Pressione REC, toque uma frase e pressione novamente para fechar o loop. Depois use OVERDUB para adicionar camadas.</p></div>
+</section>
+
+<section class="page" id="notes">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Notes</h1><p class="sub">Cifras, tablaturas, letras e ideias.</p>
+<div class="card"><input id="ntitle" type="text" placeholder="Título da nota"><label>Conteúdo</label><textarea id="nbody" placeholder="Ex.:
+
+Am        F        C        G
+e|--------------------------|
+B|------1-3-1---------------|
+G|--2-4-------4-2-----------|
+
+BPM: 90"></textarea><div class="controls" style="margin-top:10px"><button class="btn primary" id="saveNote">Salvar</button><button class="btn danger" id="clearNote">Limpar</button></div></div>
+<div class="card"><h2>Minhas notas</h2><div id="noteslist"></div></div>
+</section>
+
+<section class="page" id="chords">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Chords</h1><p class="sub">Dicionário rápido de acordes.</p>
+<div class="card"><label>Acorde</label><select id="chordsel"></select><div class="chordbox center" id="chordout" style="margin-top:12px"></div></div>
+<div class="grid g2">
+<button class="tile" onclick="setChord('C')"><span class="emoji">C</span><b>C Major</b></button><button class="tile" onclick="setChord('Am')"><span class="emoji">Am</span><b>A Minor</b></button>
+<button class="tile" onclick="setChord('G')"><span class="emoji">G</span><b>G Major</b></button><button class="tile" onclick="setChord('E')"><span class="emoji">E</span><b>E Major</b></button>
+</div>
+</section>
+
+<section class="page" id="scales">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Scales</h1><p class="sub">Explore escalas no braço.</p>
+<div class="card"><label>Escala</label><select id="scalesel"><option value="pent">A Minor Pentatonic</option><option value="major">C Major</option><option value="blues">A Blues</option></select><div class="fret" id="fret"></div></div>
+</section>
+
+<section class="page" id="settings">
+<button class="back-btn" onclick="show('studio')">← Voltar</button>
+<h1>Configurações</h1><p class="sub">Preferências do GuitarLab.</p>
+<div class="card"><h2>📱 Instalação</h2><p class="muted">No iPhone, use Safari → Compartilhar → Adicionar à Tela de Início. O modo instalado usa a área inteira da tela.</p><button class="btn primary" id="installBtn2">Adicionar / Instalar</button></div>
+<div class="card"><h2>☕ Sobre o Desenvolvedor</h2><p class="muted">Desenvolvido por <b>Eduardo Motta</b>.</p><div class="pix-box"><span>Contribua para o projeto via Pix:</span><code id="pixKey2">eduardomottagithub@gmail.com</code><button class="btn" style="padding:6px 12px;font-size:12px" onclick="copyPix('pixKey2')">Copiar Chave Pix</button></div></div>
+<div class="card"><h2>💾 Dados</h2><p class="muted">Notas e preferências são armazenadas localmente neste dispositivo.</p><button class="btn danger" onclick="localStorage.clear();location.reload()">Apagar dados locais</button></div>
+</section>
+
+</main>
+<div class="bottom"><nav class="nav">
+<button class="navbtn active" data-p="studio"><span class="ni">🏠</span>Studio</button>
+<button class="navbtn" data-p="tone"><span class="ni">🎛️</span>Tone</button>
+<button class="navbtn" data-p="jam"><span class="ni">▶️</span>Jam</button>
+<button class="navbtn" data-p="notes"><span class="ni">📝</span>Notes</button>
+<button class="navbtn" data-p="more"><span class="ni">•••</span>Mais</button>
+</nav></div>
+</div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+const titles={studio:'Studio',tuner:'Afinador',tone:'Tone Lab',amps:'Amp Sims',pedal:'Pedalboard',metro:'Metrônomo',jam:'Jam Room',looper:'Looper',notes:'Notes',chords:'Chords',scales:'Scales',settings:'Configurações'};
+function show(id){if(id==='more'){id='settings'}$$('.page').forEach(x=>x.classList.toggle('active',x.id===id));$$('.navbtn').forEach(x=>x.classList.toggle('active',x.dataset.p===id));window.scrollTo(0,0)}$$('.navbtn').forEach(b=>b.onclick=()=>{if(b.dataset.p==='more'){show('settings')}else show(b.dataset.p)});
+
+/* PWA manifest + icons in one HTML via data URI */
+const iconSvg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="110" fill="#090b0e"/><circle cx="256" cy="256" r="190" fill="#ff7818"/><path d="M315 105c-36 2-71 18-98 45l-97 97c-24 24-24 63 0 87s63 24 87 0l97-97c27-27 43-62 45-98l-1-34-33 0zm-87 203-38 38c-12 12-31 12-43 0s-12-31 0-43l38-38 43 43zm91-91-43-43 25-25 43 43-25 25z" fill="#11151b"/></svg>`;
+const iconData='data:image/svg+xml;base64,'+btoa(iconSvg);
+let mf={name:"GuitarLab",short_name:"GuitarLab",start_url:location.href,display:"standalone",background_color:"#090b0e",theme_color:"#090b0e",icons:[{src:iconData,sizes:"512x512",type:"image/svg+xml"}]};
+$('#manifest').href=URL.createObjectURL(new Blob([JSON.stringify(mf)],{type:'application/json'}));
+let deferredPrompt=null;window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e});
+async function install(){if(deferredPrompt){deferredPrompt.prompt();deferredPrompt=null}else alert('No iPhone, abra no Safari e use Compartilhar → Adicionar à Tela de Início.')}
+$('#installBtn').onclick=install;$('#installBtn2').onclick=install;
+
+/* Copiar Pix */
+function copyPix(id='pixKey'){let key=$('#'+id).textContent;navigator.clipboard.writeText(key).then(()=>alert('Chave Pix copiada para a área de transferência!')).catch(()=>alert('Erro ao copiar.'))}
+
+/* Tone */
+const presets={clean:[25,55,50,68,10,20],blues:[48,62,55,62,20,30],rock:[70,58,48,60,14,24],metal:[88,62,40,72,6,16]};
+function dial(id,v){let d=$(id);d.style.setProperty('--p',v+'%');d.querySelector('span').textContent=v}
+['gain','bass','mid','treble'].forEach(x=>$('#'+x).oninput=e=>dial('#d'+x,e.target.value));
+['gain','bass','mid','treble'].forEach(x=>dial('#d'+x,$('#'+x).value));
+$('#tpreset').onchange=e=>{let p=presets[e.target.value];['gain','bass','mid','treble','delay','reverb'].forEach((x,i)=>{$('#'+x).value=p[i];i<4?dial('#d'+x,p[i]):null; if(x==='delay')$('#delayv').textContent=p[i]+'\%';if(x==='reverb')$('#reverbv').textContent=p[i]+'%'})};
+$('#delay').oninput=e=>$('#delayv').textContent=e.target.value+'\%';$('#reverb').oninput=e=>$('#reverbv').textContent=e.target.value+'\%';  /* amps */ $$('.amp').forEach(x=>x.onclick=()=>$('#ampname').textContent=x.dataset.a);  /* pedalboard */ $$('.pedal').forEach(x=>x.onclick=()=>x.classList.toggle('on'));$$('.pedaladd').forEach(x=>x.onclick=()=>{let d=document.createElement('div');d.className='pedal on';d.innerHTML='<b>'+x.dataset.name+'</b><small>'+x.dataset.sub+'</small>';d.onclick=()=>d.classList.toggle('on');$('#chain').appendChild(d)});
+function savePedal(){localStorage.setItem('guitar_preset',$('#pedpreset').value);$('#pedstatus').textContent='Preset salvo neste iPhone.'}
+
+/* metronome */
+let mt=null,mb=0,taps=[];
+function beats(){let n=+$('#beats').value;$('#beatrow').innerHTML=Array.from({length:n},(_,i)=>'<i class="beat '+(i===mb?'on':'')+'"></i>').join('')}
+beats();$('#beats').onchange=()=>{mb=0;beats()};$('#bpm').oninput=e=>$('#bpmv').textContent=e.target.value;
+function clickBeat(){let n=+$('#beats').value;mb=(mb+1)%n;beats();try{let c=new AudioContext(),o=c.createOscillator(),g=c.createGain();o.frequency.value=mb===0?1100:750;g.gain.value=.045;o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+.045)}catch(e){}}
+function startM(){clearInterval(mt);clickBeat();mt=setInterval(clickBeat,60000/+$('#bpm').value);$('#mbtn').textContent='■'}
+$('#mbtn').onclick=()=>{if(mt){clearInterval(mt);mt=null;$('#mbtn').textContent='▶'}else startM()};$('#bpm').onchange=()=>{if(mt)startM()};
+$('#tap').onclick=()=>{let n=Date.now();taps=taps.filter(x=>n-x<2000);taps.push(n);if(taps.length>1){let a=taps.slice(1).reduce((s,x,i)=>s+x-taps[i],0)/(taps.length-1);let v=Math.max(30,Math.min(240,Math.round(60000/a)));$('#bpm').value=v;$('#bpmv').textContent=v}};
+
+/* jam */
+$('#speed').oninput=e=>$('#speedv').textContent=Math.round(e.target.value*100)+'%';
+$('#files').onchange=e=>{for(const f of e.target.files){let u=URL.createObjectURL(f),d=document.createElement('div');d.className='track';d.innerHTML='<b>'+f.name+'</b><audio controls src="'+u+'"></audio>';d.querySelector('audio').onratechange=ev=>ev.target.playbackRate=+$('#speed').value;$('#tracks').appendChild(d)}};
+let currentAudio=null;$('#minus10').onclick=()=>{if(currentAudio)currentAudio.currentTime=Math.max(0,currentAudio.currentTime-10)};$('#plus10').onclick=()=>{if(currentAudio)currentAudio.currentTime+=10};
+function saveSession(){localStorage.setItem('guitar_session',$('#session').value);alert('Sessão salva.')}
+$('#session').value=localStorage.getItem('guitar_session')||'';
+new MutationObserver(()=>{let a=$('#tracks audio');if(a)currentAudio=a}).observe($('#tracks'),{childList:true});
+
+/* notes */
+let notes=JSON.parse(localStorage.getItem('guitar_notes')||'[]'),edit=-1;
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function renderNotes(){$('#noteslist').innerHTML=notes.length?notes.map((n,i)=>`<div class="noteitem" onclick="loadNote(${i})"><b>${esc(n.t||'Sem título')}</b><small>${new Date(n.d).toLocaleString('pt-BR')}</small></div>`).join(''):'<p class="muted">Nenhuma nota salva.</p>'}
+window.loadNote=i=>{edit=i;$('#ntitle').value=notes[i].t;$('#nbody').value=notes[i].b;show('notes')};
+$('#saveNote').onclick=()=>{let n={t:$('#ntitle').value,b:$('#nbody').value,d:Date.now()};if(edit<0)notes.unshift(n);else notes[edit]=n;edit=-1;localStorage.setItem('guitar_notes',JSON.stringify(notes));$('#ntitle').value='';$('#nbody').value='';renderNotes()};
+$('#clearNote').onclick=()=>{$('#ntitle').value='';$('#nbody').value='';edit=-1};renderNotes();
+
+/* chords */
+const chords={C:`C Major\n\ne|---0---\nB|---1---\nG|---0---\nD|---2---\nA|---3---\nE|---X---`,Am:`A Minor\n\ne|---0---\nB|---1---\nG|---2---\nD|---2---\nA|---0---\nE|---X---`,G:`G Major\n\ne|---3---\nB|---0---\nG|---0---\nD|---0---\nA|---2---\nE|---3---`,E:`E Major\n\ne|---0---\nB|---0---\nG|---1---\nD|---2---\nA|---2---\nE|---0---`,D:`D Major\n\ne|---2---\nB|---3---\nG|---2---\nD|---0---\nA|---X---\nE|---X---`,Em:`E Minor\n\ne|---0---\nB|---0---\nG|---0---\nD|---2---\nA|---2---\nE|---0---`};
+Object.keys(chords).forEach(k=>{let o=document.createElement('option');o.value=k;o.textContent=k;$('#chordsel').appendChild(o)});function setChord(k){$('#chordsel').value=k;$('#chordout').textContent=chords[k]}$('#chordsel').onchange=e=>setChord(e.target.value);setChord('C');
+
+/* fretboard */
+const stringNames=['E','A','D','G','B','E'];const openMidi=[40,45,50,55,59,64];
+function renderFret(){let type=$('#scalesel').value;let roots=type==='major'?[0,2,4,5,7,9,11]:type==='blues'?[0,3,5,6,7,10]:[0,3,5,7,10];let root=type==='major'?0:9;let h='<table><tr><th></th>'+Array.from({length:13},(_,i)=>'<th>'+i+'</th>').join('')+'</tr>';for(let s=0;s<6;s++){h+='<tr><th>'+stringNames[s]+'</th>';for(let f=0;f<=12;f++){let n=(openMidi[s]+f)%12,rel=(n-root+12)%12;h+=`<td>${roots.includes(rel)?'<span class="dot">'+(n===root?'R':'')+'</span>':''}</td>`}h+='</tr>'}$('#fret').innerHTML=h+'</table>'}$('#scalesel').onchange=renderFret;renderFret();
+
+/* tuner */
+let ts=null,tc=null,ta=null,raf=null;
+const nn=['C','C♯','D','D♯','E','F','F♯','G','G♯','A','A♯','B'];
+function pitch(buf,sr){let n=buf.length,r=0;for(let v of buf)r+=v*v;r=Math.sqrt(r/n);if(r<.012)return-1;let c=new Float32Array(n);for(let lag=0;lag<n;lag++){let sum=0;for(let i=0;i<n-lag;i++)sum+=buf[i]*buf[i+lag];c[lag]=sum}let best=0,max=-1;for(let i=40;i<n/2;i++)if(c[i]>max){max=c[i];best=i}return best?sr/best:-1}
+function tuneLoop(){let b=new Float32Array(4096);ta.getFloatTimeDomainData(b);let f=pitch(b,tc.sampleRate);if(f>50&&f<800){let m=Math.round(69+12*Math.log2(f/440)),tar=440*Math.pow(2,(m-69)/12),cent=Math.round(1200*Math.log2(f/tar));$('#tnote').textContent=nn[(m+120)%12];$('#tinfo').textContent=f.toFixed(1)+' Hz · '+(cent>0?'+':'')+cent+' cents';$('#tneedle').style.left=Math.max(0,Math.min(100,50+cent/2))+'%'}raf=requestAnimationFrame(tuneLoop)}
+async function startT(){try{ts=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:false,autoGainControl:false}});tc=new AudioContext();ta=tc.createAnalyser();ta.fftSize=4096;tc.createMediaStreamSource(ts).connect(ta);$('#tstatus').textContent='Microfone ativo — toque uma corda.';tuneLoop()}catch(e){$('#tstatus').textContent='Microfone indisponível: '+e.message}}
+function stopT(){if(raf)cancelAnimationFrame(raf);if(ts)ts.getTracks().forEach(x=>x.stop());if(tc)tc.close();ts=null;$('#tstatus').textContent='Microfone parado.'}$('#tstart').onclick=startT;$('#tstop').onclick=stopT;
+
+/* tone monitor */
+let sm=null,sc=null;async function startTone(){try{sm=await navigator.mediaDevices.getUserMedia({audio:true});sc=new AudioContext();let src=sc.createMediaStreamSource(sm),g=sc.createGain();g.gain.value=.65;src.connect(g);g.connect(sc.destination);$('#tonestatus').textContent='Monitoramento ativo. Use fones.'}catch(e){$('#tonestatus').textContent='Microfone indisponível: '+e.message}}function stopTone(){if(sm)sm.getTracks().forEach(x=>x.stop());if(sc)sc.close();sm=null;$('#tonestatus').textContent='Monitoramento parado.'}$('#tonemic').onclick=startTone;$('#tonestop').onclick=stopTone;
+
+/* simple looper UI */
+let lt=null,ls=0,loopStart=0;function loopClock(){if(ls){let s=Math.floor((Date.now()-loopStart)/1000),m=Math.floor(s/60),q=s%60;$('#looptime').textContent=String(m).padStart(2,'0')+':'+String(q).padStart(2,'0');lt=requestAnimationFrame(loopClock)}}$('#rec').onclick=()=>{if(!ls){ls=1;loopStart=Date.now();$('#loopstatus').textContent='Gravando… pressione REC novamente para fechar o loop.';loopClock()}else{ls=0;cancelAnimationFrame(lt);$('#loopstatus').textContent='Loop fechado. OVERDUB disponível para novas camadas.'}};$('#over').onclick=()=>$('#loopstatus').textContent='OVERDUB: camada pronta para gravação.';$('#clearloop').onclick=()=>{ls=0;cancelAnimationFrame(lt);$('#looptime').textContent='00:00';$('#loopstatus').textContent='Looper limpo.'};
+
+/* install title / saved */
+if(localStorage.getItem('guitar_preset'))$('#pedpreset').value=localStorage.getItem('guitar_preset');
+</script>
+</body>
+</html>
